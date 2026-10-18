@@ -1,0 +1,14 @@
+{
+  "name": "iinzhener",
+  "owner": { "name": "Azamat Raimbekov", "url": "https://github.com/AzamatRaimbekov" },
+  "metadata": { "description": "Маркетплейс курса «ИИнженер»" },
+  "plugins": [
+    {
+      "name": "iinzhener-brain",
+      "source": "./",
+      "description": "Второй мозг курса «ИИнженер 1.0»: уроки, конспекты видео, промпты, роадмап, чеклисты.",
+      "version": "1.0.0",
+      "category": "learning"
+    }
+  ]
+}

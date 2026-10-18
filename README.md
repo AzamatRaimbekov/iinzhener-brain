@@ -11,7 +11,30 @@
 - [02-Чеклист.md](02-Чеклист.md): проверка навыков
 - [03-Что-дальше.md](03-Что-дальше.md): план на 30 дней после курса
 
-## 🤖 Подключить к своему ИИ
+## 🧩 Установить в Claude Code как плагин или скилл
+
+**Плагин** (база курса и 2 скилла, обновляется командой `/plugin update`):
+```
+/plugin install iinzhener-brain --marketplace AzamatRaimbekov/iinzhener-brain
+```
+На старых версиях Claude Code ставится в два шага:
+```
+/plugin marketplace add AzamatRaimbekov/iinzhener-brain
+/plugin install iinzhener-brain@iinzhener
+```
+
+**Только скиллы** (база скачается в `~/iinzhener-brain` при первом вопросе):
+```bash
+npx skills add AzamatRaimbekov/iinzhener-brain --skill iinzhener --skill iinzhener-progress -a claude-code -g -y
+```
+
+Что внутри:
+- **`iinzhener`**: отвечает на вопросы по курсу («в каком уроке про деплой?», «дай промпт для Expo», «где в видео про Superpowers?»), всегда со ссылкой на урок и таймкод.
+- **`iinzhener-progress`**: смотрит ваш проект, сверяет с чеклистом курса и говорит, что уже сделано, чего не хватает и какой урок смотреть следующим.
+
+Спрашивайте обычным текстом: скилл включится сам. Можно вызвать и командой: `/iinzhener-brain:iinzhener` и `/iinzhener-brain:iinzhener-progress`, если стоит плагин, или `/iinzhener` и `/iinzhener-progress`, если ставили только скиллы.
+
+## 🤖 Подключить к своему ИИ как папку
 ```bash
 git clone https://github.com/AzamatRaimbekov/iinzhener-brain.git
 ```

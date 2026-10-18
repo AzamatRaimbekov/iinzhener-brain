@@ -1,0 +1,10 @@
+{
+  "name": "iinzhener-brain",
+  "version": "1.0.0",
+  "description": "Второй мозг курса «ИИнженер 1.0»: 14 уроков вайбкодинга с Claude, конспекты видео с таймкодами, промпты, инструменты, роадмап и чеклисты. Отвечает на вопросы по курсу и проверяет прогресс ученика.",
+  "author": { "name": "Azamat Raimbekov", "url": "https://github.com/AzamatRaimbekov" },
+  "homepage": "https://azamatraimbekov.github.io/iinzhener-brain/",
+  "repository": "https://github.com/AzamatRaimbekov/iinzhener-brain",
+  "license": "MIT",
+  "keywords": ["курс", "вайбкодинг", "claude-code", "обучение", "second-brain"]
+}
