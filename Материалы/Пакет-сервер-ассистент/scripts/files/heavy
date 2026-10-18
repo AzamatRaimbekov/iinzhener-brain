@@ -1,0 +1,22 @@
+#!/bin/bash
+# heavy <команда...> — запустить тяжёлую задачу (рендер видео, ffmpeg, whisper)
+# в общем отсеке heavy.slice с потолком памяти.
+# Если задача вылезет за потолок, умрёт только она (код 137), а бот останется на связи.
+# Окружение и текущая папка сохраняются: --scope запускает команду прямо отсюда.
+set -euo pipefail
+
+if [ "$#" -eq 0 ]; then
+  echo "Использование: heavy <команда> [аргументы...]" >&2
+  exit 2
+fi
+
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+status=0
+systemd-run --user --scope --quiet --collect --slice=heavy.slice \
+  -p OOMPolicy=continue -- "$@" || status=$?
+
+if [ "$status" -eq 137 ]; then
+  echo "heavy: задаче не хватило памяти (потолок отсека heavy.slice). Запусти её одну, без параллельных рендеров, или уменьши число потоков/воркеров (например --workers 1)." >&2
+fi
+exit "$status"

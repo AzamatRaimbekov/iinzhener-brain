@@ -1,0 +1,49 @@
+{
+  "_комментарий": "Шаблон профиля. Скопируйте в profile.json и заполните — скилл проведёт вас через это сам, см. references/onboarding.md",
+
+  "owner": "Имя владельца аватара",
+  "language": "ru",
+
+  "heygen": {
+    "avatar_id": "ЗАПОЛНИТЬ — id look'а из list_avatar_looks",
+    "avatar_note": "Какой это образ, в каком разрешении снят. Для вертикали нужен снятый портретно, иначе кадр растянет",
+    "voice_id": "ЗАПОЛНИТЬ — id из list_voices",
+    "voice_note": "Нативный клон HeyGen или внешний (ElevenLabs). Внешний зависит от чужой подписки и может отказать",
+    "engine": "avatar_iv",
+    "engine_note": "avatar_iv спокойнее, avatar_v выразительнее но иногда переигрывает — выбирается на пробном ролике",
+    "aspect_ratio": "9:16",
+    "resolution": "1080p",
+    "voice_settings": {
+      "engine_type": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "stability": 0.30,
+      "similarity_boost": 0.70,
+      "style": 0.60
+    },
+    "motion_prompt": null
+  },
+
+  "avatar_frame": {
+    "crop_y": 400,
+    "crop_h": 1080,
+    "note": "Откуда брать квадрат с лицом для нижней половины сплита. Подбирается один раз: макушка должна встать сразу под швом"
+  },
+
+  "subtitles": {
+    "font": "путь к жирному шрифту с нужной кириллицей/латиницей",
+    "font_accent": "путь к контрастной гарнитуре для акцентов (курсив, антиква)",
+    "size": 76,
+    "accent_color": [185, 160, 255],
+    "accent_scale": 1.34,
+    "plate_color": [38, 38, 42],
+    "seam_y": 830,
+    "avatar_shot_y": 1190,
+    "max_words": 3,
+    "forbidden_colors": []
+  },
+
+  "tempo": {
+    "speed_up": 1.0,
+    "note": "1.0 — без ускорения. Поднять, если речь кажется медленной"
+  }
+}

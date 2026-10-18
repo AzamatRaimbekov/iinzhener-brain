@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# restart-bot — перезапуск сессии бота (нужен после подключения нового плагина/MCP: сессия читает
+# настройки только при старте). Срабатывает через 5 секунд отдельной службой, чтобы бот мог
+# вызвать это сам и не убить себя посреди команды.
+#   restart-bot            # новый разговор
+#   restart-bot <id>       # продолжить разговор с этим id (из ~/.claude/projects/…)
+set -euo pipefail
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+SESSION="${BOT_SESSION:-assistant-telegram}"
+RESUME="${1:-}"
+if [ -n "$RESUME" ]; then
+  systemctl --user set-environment RESUME_SESSION="$RESUME"
+else
+  systemctl --user unset-environment RESUME_SESSION 2>/dev/null || true
+fi
+systemd-run --user --unit="bot-restart-$(date +%s)" --on-active=5s --timer-property=AccuracySec=1s \
+  /bin/bash -lc "tmux kill-session -t '$SESSION' 2>/dev/null; sleep 2; systemctl --user start assistant.service"
+echo "Перезапуск сессии $SESSION через 5 секунд."

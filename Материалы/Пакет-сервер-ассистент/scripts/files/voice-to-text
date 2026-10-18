@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# voice-to-text <аудио или видео> [язык] — расшифровка голосового локально (whisper.cpp).
+# Язык по умолчанию auto. Примеры: voice-to-text voice.oga   voice-to-text voice.oga ru
+# Текст печатается в stdout. Работает внутри отсека heavy, чтобы не уронить бота.
+set -euo pipefail
+INPUT="${1:?Укажи файл: voice-to-text <файл> [язык]}"
+LANG_CODE="${2:-auto}"
+MODEL="${WHISPER_MODEL:-$HOME/whisper-models/ggml-large-v3-turbo-q5_0.bin}"
+export PATH="$HOME/.local/bin:$PATH"
+
+[ -s "$INPUT" ] || { echo "Файл не найден или пустой: $INPUT" >&2; exit 1; }
+[ -s "$MODEL" ] || { echo "Нет модели $MODEL — запусти 03-whisper.sh" >&2; exit 1; }
+
+WORK="$(mktemp -d)"
+trap 'rm -rf "$WORK"' EXIT
+# whisper понимает только 16 кГц моно wav
+heavy ffmpeg -loglevel error -y -i "$INPUT" -ar 16000 -ac 1 -c:a pcm_s16le "$WORK/audio.wav"
+THREADS="$(( $(nproc) > 2 ? $(nproc) - 1 : 1 ))"
+heavy whisper-cli -m "$MODEL" -l "$LANG_CODE" -nt -t "$THREADS" -f "$WORK/audio.wav" 2>/dev/null \
+  | sed -e 's/^[[:space:]]*//' -e '/^$/d'
